@@ -349,4 +349,5 @@ end
 
 mobs:register_egg("mobs_npc:trader", "Trader", "default_sandstone.png", 1)
 
-minetest.register_alias("mobs:trader", "mobs_npc:trader")
+-- compatibility
+mobs:alias_mob("mobs:trader", "mobs_npc:trader")

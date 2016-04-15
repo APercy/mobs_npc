@@ -113,4 +113,5 @@ mobs:register_mob("mobs_npc:npc", {
 
 mobs:register_egg("mobs_npc:npc", "Npc", "default_brick.png", 1)
 
-minetest.register_alias("mobs:npc", "mobs_npc:npc")
+-- compatibility
+mobs:alias_mob("mobs:npc", "mobs_npc:npc")
