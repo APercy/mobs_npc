@@ -1,4 +1,6 @@
 
+local S = mobs.intllib
+
 mobs.human = {
 	items = {
 		--{item for sale, price, chance of appearing in trader's inventory}
@@ -247,7 +249,7 @@ function mobs_trader(self, clicker, entity, race)
 	if not self.game_name then
 
 		self.game_name = tostring(race.names[math.random(1, #race.names)])
-		self.nametag = "Trader " .. self.game_name
+		self.nametag = S("Trader @1", self.game_name)
 
 		self.object:set_properties({
 			nametag = self.nametag,
@@ -327,27 +329,27 @@ function mobs_trader(self, clicker, entity, race)
 		mobs.add_goods(entity, race)
 	end
 
-	minetest.chat_send_player(player, "[NPC] <Trader " .. self.game_name
-		.. "> Hello, " .. player .. ", have a look at my wares.")
+	minetest.chat_send_player(player, S("[NPC] <Trader @1 > Hello, @2, have a look at my wares.",
+		self.game_name, player))
 
 	minetest.show_formspec(player, "trade", "size[8,10;]"
 		.. default.gui_bg_img
 		.. default.gui_slots
-		.. "label[0,0;Trader " .. self.game_name .. "'s stock:]"
+		.. "label[0,0;" .. S("Trader @1's stock:", self.game_name) .. "]"
 		.. "list[detached:" .. unique_entity_id .. ";goods;.5,.5;3,5;]"
-		.. "label[4.5,0.5;Selection]"
+		.. "label[4.5,0.5;" .. S("Selection") .. "]"
 		.. "list[detached:" .. unique_entity_id .. ";selection;4.5,1;5.5,2;]"
-		.. "label[6,0.5;Price]"
+		.. "label[6,0.5;" .. S("Price") .. "]"
 		.. "list[detached:" .. unique_entity_id .. ";price;6,1;7,2;]"
-		.. "label[4.5,3.5;Payment]"
+		.. "label[4.5,3.5;" .. S("Payment") .. "]"
 		.. "list[detached:" .. unique_entity_id .. ";payment;4.5,4;5.5,5;]"
-		.. "label[6,3.5;Bought items]"
+		.. "label[6,3.5;" .. S("Bought items") .. "]"
 		.. "list[detached:" .. unique_entity_id .. ";takeaway;6,4;7.5,5.5;]"
 		.. "list[current_player;main;0,6;8,4;]"
 	)
 end
 
-mobs:register_egg("mobs_npc:trader", "Trader", "default_sandstone.png", 1)
+mobs:register_egg("mobs_npc:trader", S("Trader"), "default_sandstone.png", 1)
 
 -- compatibility
 mobs:alias_mob("mobs:trader", "mobs_npc:trader")

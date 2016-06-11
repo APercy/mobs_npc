@@ -1,4 +1,6 @@
 
+local S = mobs.intllib
+
 -- Npc by TenPlus1
 
 mobs.npc_drops = {
@@ -83,7 +85,7 @@ mobs:register_mob("mobs_npc:npc", {
 				name = mobs.npc_drops[math.random(1, #mobs.npc_drops)]
 			})
 
-			minetest.chat_send_player(name, "NPC dropped you an item for gold!")
+			minetest.chat_send_player(name, S("NPC dropped you an item for gold!"))
 
 			return
 		end
@@ -97,11 +99,11 @@ mobs:register_mob("mobs_npc:npc", {
 			if self.order == "follow" then
 				self.order = "stand"
 
-				minetest.chat_send_player(name, "NPC stands still.")
+				minetest.chat_send_player(name, S("NPC stands still."))
 			else
 				self.order = "follow"
 
-				minetest.chat_send_player(name, "NPC will follow you.")
+				minetest.chat_send_player(name, S("NPC will follow you."))
 			end
 		end
 
@@ -111,7 +113,7 @@ mobs:register_mob("mobs_npc:npc", {
 --mobs:register_spawn("mobs:npc", {"default:dirt_with_grass"}, 20, 0, 7000, 1, 31000)
 --mobs:spawn_specific("mobs:npc", {"default:brick"}, {"air"}, 0, 15, 1, 1, 1, 0, 200, true)
 
-mobs:register_egg("mobs_npc:npc", "Npc", "default_brick.png", 1)
+mobs:register_egg("mobs_npc:npc", S("Npc"), "default_brick.png", 1)
 
 -- compatibility
 mobs:alias_mob("mobs:npc", "mobs_npc:npc")
