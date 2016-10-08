@@ -26,5 +26,6 @@ mobs.intllib = S
 -- NPC
 dofile(path .. "/npc.lua") -- TenPlus1
 dofile(path .. "/trader.lua")
+dofile(path .. "/igor.lua")
 
 print (S("[MOD] Mobs Redo 'NPCs' loaded"))
