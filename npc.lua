@@ -110,8 +110,16 @@ mobs:register_mob("mobs_npc:npc", {
 	end,
 })
 
---mobs:register_spawn("mobs:npc", {"default:dirt_with_grass"}, 20, 0, 7000, 1, 31000)
---mobs:spawn_specific("mobs:npc", {"default:brick"}, {"air"}, 0, 15, 1, 1, 1, 0, 200, true)
+mobs:spawn({
+	name = "mobs_npc:npc",
+	nodes = {"default:brick"},
+	neighbors = {"default:grass_3"},
+	min_light = 10,
+	chance = 10000,
+	active_object_count = 1,
+	min_height = 0,
+	day_toggle = true,
+})
 
 mobs:register_egg("mobs_npc:npc", S("Npc"), "default_brick.png", 1)
 
