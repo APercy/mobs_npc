@@ -93,6 +93,9 @@ mobs:register_mob("mobs_npc:npc", {
 		-- capture npc with net or lasso
 		mobs:capture_mob(self, clicker, 0, 5, 80, false, nil)
 
+		-- protect npc with mobs:protector
+		mobs:protect(self, clicker)
+
 		-- by right-clicking owner can switch npc between follow and stand
 		if self.owner and self.owner == name then
 

@@ -106,6 +106,7 @@ mobs:register_mob("mobs_npc:igor", {
 			end
 		end
 
+		mobs:protect(self, clicker)
 		mobs:capture_mob(self, clicker, 0, 5, 80, false, nil)
 	end,
 })
