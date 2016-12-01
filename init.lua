@@ -28,4 +28,6 @@ dofile(path .. "/npc.lua") -- TenPlus1
 dofile(path .. "/trader.lua")
 dofile(path .. "/igor.lua")
 
+dofile(path .. "/lucky_block.lua")
+
 print (S("[MOD] Mobs Redo 'NPCs' loaded"))
