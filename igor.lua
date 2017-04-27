@@ -67,9 +67,9 @@ mobs:register_mob("mobs_npc:igor", {
 	on_rightclick = function(self, clicker)
 
 		-- feed to heal npc
-		if mobs:feed_tame(self, clicker, 8, false, true) then
-			return
-		end
+		if mobs:feed_tame(self, clicker, 8, false, true) then return end
+		if mobs:protect(self, clicker) then return end
+		if mobs:capture_mob(self, clicker, 0, 5, 80, false, nil) then return end
 
 		local item = clicker:get_wielded_item()
 		local name = clicker:get_player_name()
@@ -105,9 +105,6 @@ mobs:register_mob("mobs_npc:igor", {
 				minetest.chat_send_player(name, S("NPC will follow you."))
 			end
 		end
-
-		mobs:protect(self, clicker)
-		mobs:capture_mob(self, clicker, 0, 5, 80, false, nil)
 	end,
 })
 -- register spawn egg
