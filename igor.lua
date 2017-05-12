@@ -13,6 +13,7 @@ mobs:register_mob("mobs_npc:igor", {
 	passive = false,
 	damage = 5,
 	attack_type = "dogfight",
+	owner_loyal = true,
 	pathfinding = true,
 	reach = 2,
 	attacks_monsters = true,
