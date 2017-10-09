@@ -82,7 +82,7 @@ mobs:register_mob("mobs_npc:npc", {
 				clicker:set_wielded_item(item)
 			end
 
-			local pos = self.object:getpos()
+			local pos = self.object:get_pos()
 
 			pos.y = pos.y + 0.5
 
