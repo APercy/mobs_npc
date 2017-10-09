@@ -77,7 +77,7 @@ mobs:register_mob("mobs_npc:npc", {
 		-- right clicking with gold lump drops random item from mobs.npc_drops
 		if item:get_name() == "default:gold_lump" then
 
-			if not minetest.setting_getbool("creative_mode") then
+			if not mobs.is_creative(name) then
 				item:take_item()
 				clicker:set_wielded_item(item)
 			end
