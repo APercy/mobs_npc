@@ -39,7 +39,7 @@ mobs:register_mob("mobs_npc:trader", {
 	armor = 100,
 	collisionbox = {-0.35,-1.0,-0.35, 0.35,0.8,0.35},
 	visual = "mesh",
-	mesh = "character.b3d",
+	mesh = "mobs_character.b3d",
 	textures = {
 		{"mobs_trader.png"}, -- by Frerin
 	},

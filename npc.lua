@@ -21,7 +21,7 @@ mobs:register_mob("mobs_npc:npc", {
 	armor = 100,
 	collisionbox = {-0.35,-1.0,-0.35, 0.35,0.8,0.35},
 	visual = "mesh",
-	mesh = "character.b3d",
+	mesh = "mobs_character.b3d",
 	drawtype = "front",
 	textures = {
 		{"mobs_npc.png"},

@@ -22,7 +22,7 @@ mobs:register_mob("mobs_npc:igor", {
 	armor = 100,
 	collisionbox = {-0.35,-1.0,-0.35, 0.35,0.8,0.35},
 	visual = "mesh",
-	mesh = "character.b3d",
+	mesh = "mobs_character.b3d",
 	textures = {
 		{"mobs_igor.png"}, -- skin by ruby32199
 		{"mobs_igor2.png"},
