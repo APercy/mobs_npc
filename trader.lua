@@ -48,7 +48,9 @@ mobs:register_mob("mobs_npc:trader", {
 	visual = "mesh",
 	mesh = "mobs_character.b3d",
 	textures = {
-		{"mobs_trader.png"},
+		{"mobs_trader.png"}, -- by Frerin
+		{"mobs_trader2.png"},
+		{"mobs_trader3.png"},
 	},
 	makes_footstep_sound = true,
 	sounds = {},
