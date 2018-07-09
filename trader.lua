@@ -1,8 +1,15 @@
+
 local S = mobs.intllib
 
+-- define table containing names for use and shop items for sale
+
 mobs.human = {
-	-- Set the item pool size to be the amount of trades listed below
-	item_pool_size = 18,
+
+	names = {
+		"Bob", "Duncan", "Bill", "Tom", "James", "Ian", "Lenny",
+		"Dylan", "Ethan"
+	},
+
 	items = {
 		--{item for sale, price, chance of appearing in trader's inventory}
 		{"default:apple 10", "default:gold_ingot 2", 10},
@@ -24,10 +31,6 @@ mobs.human = {
 		{"default:papyrus 2", "default:gold_ingot 2", 40},
 		{"default:mese_crystal_fragment 1", "default:dirt_with_grass 10", 90},
 		{"default:mese_crystal_fragment 1", "default:gold_ingot 5", 90},
-	},
-	names = {
-		"Bob", "Duncan", "Bill", "Tom", "James", "Ian", "Lenny",
-		"Dylan", "Ethan"
 	}
 }
 
@@ -39,6 +42,7 @@ mobs:register_mob("mobs_npc:trader", {
 	damage = 3,
 	attack_type = "dogfight",
 	attacks_monsters = true,
+	attack_animals = false,
 	attack_npcs = false,
 	pathfinding = false,
 	hp_min = 10,
@@ -81,6 +85,14 @@ mobs:register_mob("mobs_npc:trader", {
 	on_rightclick = function(self, clicker)
 		mobs_trader(self, clicker, entity, mobs.human)
 	end,
+	on_spawn = function(self)
+		self.nametag = S("Trader")
+		self.object:set_properties({
+			nametag = self.nametag,
+			nametag_color = "#FFFFFF"
+		})
+		return true -- return true so on_spawn is run once only
+	end,
 })
 
 --This code comes almost exclusively from the trader and inventory of mobf, by Sapier.
@@ -116,11 +128,12 @@ function mobs.add_goods(self, entity, race)
 	local trade_index = 1
 	local trades_already_added = {}
 	local trader_pool_size = 10
+	local item_pool_size = #race.items -- get number of items on list
 
 	self.trades = {}
 
-	if race.item_pool_size < trader_pool_size then
-		trader_pool_size = race.item_pool_size
+	if item_pool_size < trader_pool_size then
+		trader_pool_size = item_pool_size
 	end
 
 	for i = 1, trader_pool_size do
@@ -130,12 +143,12 @@ function mobs.add_goods(self, entity, race)
 		-- select them
 		local random_trade = nil
 
-		if race.item_pool_size == trader_pool_size then
+		if item_pool_size == trader_pool_size then
 			random_trade = i
 		else
 			while random_trade == nil do
 
-				local num = math.random(race.item_pool_size)
+				local num = math.random(item_pool_size)
 
 				if trades_already_added[num] == nil then
 					trades_already_added[num] = true
@@ -181,7 +194,7 @@ function mobs_trader(self, clicker, entity, race)
 	local player = clicker:get_player_name()
 
 	minetest.chat_send_player(player,
-		S("[NPC] <Trader @1 > Hello, @2, have a look at my wares.",
+		S("[NPC] <Trader @1> Hello, @2, have a look at my wares.",
 		self.game_name, player))
 
 	-- Make formspec trade list
