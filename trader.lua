@@ -82,15 +82,21 @@ mobs:register_mob("mobs_npc:trader", {
 		punch_start = 200,
 		punch_end = 219,
 	},
+
 	on_rightclick = function(self, clicker)
+		self.attack = nil
 		mobs_trader(self, clicker, entity, mobs.human)
 	end,
+
 	on_spawn = function(self)
+
 		self.nametag = S("Trader")
+
 		self.object:set_properties({
 			nametag = self.nametag,
 			nametag_color = "#FFFFFF"
 		})
+
 		return true -- return true so on_spawn is run once only
 	end,
 })
