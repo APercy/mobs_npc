@@ -1,33 +1,16 @@
 
-local path = minetest.get_modpath("mobs_npc")
-
--- Intllib
-local S
-if minetest.get_modpath("intllib") then
-	S = intllib.Getter()
-else
-	S = function(s, a, ...)
-		if a == nil then
-			return s
-		end
-		a = {a, ...}
-		return s:gsub("(@?)@(%(?)(%d+)(%)?)",
-			function(e, o, n, c)
-				if e == ""then
-					return a[tonumber(n)] .. (o == "" and c or "")
-				else
-					return "@" .. o .. n .. c
-				end
-			end)
-	end
-end
+-- Load support for intllib.
+local path = minetest.get_modpath(minetest.get_current_modname())
+local S = minetest.get_translator and minetest.get_translator("mobs_npc") or
+		dofile(path .. "/intllib.lua")
 mobs.intllib = S
 
--- NPC
+-- NPCs
 dofile(path .. "/npc.lua") -- TenPlus1
 dofile(path .. "/trader.lua")
 dofile(path .. "/igor.lua")
 
+-- Lucky Blocks
 dofile(path .. "/lucky_block.lua")
 
 print (S("[MOD] Mobs Redo NPCs loaded"))
