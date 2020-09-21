@@ -120,6 +120,7 @@ mobs:register_mob("mobs_npc:npc", {
 	end,
 })
 
+if not mobs.custom_spawn_npc then
 mobs:spawn({
 	name = "mobs_npc:npc",
 	nodes = {"default:brick"},
@@ -130,6 +131,7 @@ mobs:spawn({
 	min_height = 0,
 	day_toggle = true,
 })
+end
 
 mobs:register_egg("mobs_npc:npc", S("Npc"), "default_brick.png", 1)
 
