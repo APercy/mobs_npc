@@ -85,7 +85,7 @@ mobs:register_mob("mobs_npc:trader", {
 
 	on_rightclick = function(self, clicker)
 		self.attack = nil
-		mobs_trader(self, clicker, entity, mobs.human)
+		mobs_trader(self, clicker, mobs.human)
 	end,
 
 	on_spawn = function(self)
@@ -129,7 +129,7 @@ mobs:register_mob("mobs_npc:trader", {
 -- initially being chosen.  Also the formspec uses item image buttons instead of
 -- inventory slots.
 
-function mobs.add_goods(self, entity, race)
+function mobs.add_goods(self, race)
 
 	local trade_index = 1
 	local trades_already_added = {}
@@ -167,7 +167,8 @@ function mobs.add_goods(self, entity, race)
 
 			self.trades[trade_index] = {
 				race.items[random_trade][1],
-				race.items[random_trade][2]}
+				race.items[random_trade][2]
+			}
 
 			trade_index = trade_index + 1
 		end
@@ -175,7 +176,7 @@ function mobs.add_goods(self, entity, race)
 end
 
 
-function mobs_trader(self, clicker, entity, race)
+function mobs_trader(self, clicker, race)
 
 	if not self.id then
 		self.id = (math.random(1, 1000) * math.random(1, 10000))
@@ -194,10 +195,10 @@ function mobs_trader(self, clicker, entity, race)
 	end
 
 	if self.trades == nil then
-		mobs.add_goods(self, entity, race)
+		mobs.add_goods(self, race)
 	end
 
-	local player = clicker:get_player_name()
+	local player = clicker:get_player_name() or ""
 
 	minetest.chat_send_player(player,
 		S("[NPC] <Trader @1> Hello, @2, have a look at my wares.",
