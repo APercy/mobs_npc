@@ -4,8 +4,12 @@ local S = mobs.intllib
 -- Npc by TenPlus1
 
 mobs.npc_drops = {
-	"default:pick_steel", "mobs:meat", "default:sword_steel",
-	"default:shovel_steel", "farming:bread", "bucket:bucket_water"
+	{"default:pick_steel", 2}, "mobs:meat", {"default:sword_steel", 2},
+	{"default:shovel_steel", 2}, "farming:bread", "bucket:bucket_water",
+	"default:sapling", "default:tree", "mobs:leather", "default:coral_orange",
+	{"default:mese_crystal_fragment", 3}, "default:clay", {"default:sign_wall", 2},
+	"default:ladder", "default:copper_lump", "default:blueberries",
+	"default:aspen_sapling", "default:permafrost_with_moss"
 }
 
 mobs:register_mob("mobs_npc:npc", {
@@ -27,9 +31,11 @@ mobs:register_mob("mobs_npc:npc", {
 	textures = {
 		{"mobs_npc.png"},
 		{"mobs_npc2.png"}, -- female by nuttmeg20
+		{"mobs_npc3.png"}, -- male by swagman181818
+		{"mobs_npc4.png"} -- female by Sapphire16
 	},
 	child_texture = {
-		{"mobs_npc_baby.png"}, -- derpy baby by AmirDerAssassine
+		{"mobs_npc_baby.png"} -- derpy baby by AmirDerAssassine
 	},
 	makes_footstep_sound = true,
 	sounds = {},
@@ -39,7 +45,7 @@ mobs:register_mob("mobs_npc:npc", {
 	drops = {
 		{name = "default:wood", chance = 1, min = 1, max = 3},
 		{name = "default:apple", chance = 2, min = 1, max = 2},
-		{name = "default:axe_stone", chance = 5, min = 1, max = 1},
+		{name = "default:axe_stone", chance = 5, min = 1, max = 1}
 	},
 	water_damage = 0,
 	lava_damage = 2,
@@ -59,7 +65,7 @@ mobs:register_mob("mobs_npc:npc", {
 		run_start = 168,
 		run_end = 187,
 		punch_start = 200,
-		punch_end = 219,
+		punch_end = 219
 	},
 
 	on_rightclick = function(self, clicker)
@@ -89,10 +95,20 @@ mobs:register_mob("mobs_npc:npc", {
 			pos.y = pos.y + 0.5
 
 			local drops = self.npc_drops or mobs.npc_drops
+			local drop = drops[math.random(#drops)]
+			local chance = 1
 
-			minetest.add_item(pos, {
-				name = drops[math.random(1, #drops)]
-			})
+			if type(drop) == "table" then
+				chance = drop[2]
+				drop = drop[1]
+			end
+
+			if not minetest.registered_items[drop]
+			or math.random(chance) > 1 then
+				drop = "default:clay_lump"
+			end
+
+			minetest.add_item(pos, {name = drop})
 
 			minetest.chat_send_player(name, S("NPC dropped you an item for gold!"))
 
@@ -129,7 +145,7 @@ mobs:spawn({
 	chance = 10000,
 	active_object_count = 1,
 	min_height = 0,
-	day_toggle = true,
+	day_toggle = true
 })
 end
 
