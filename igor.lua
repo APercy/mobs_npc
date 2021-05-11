@@ -88,9 +88,6 @@ mobs:register_mob("mobs_npc:igor", {
 			end
 
 			local pos = self.object:get_pos()
-
-			pos.y = pos.y + 0.5
-
 			local drops = self.igor_drops or mobs.igor_drops
 			local drop = drops[math.random(#drops)]
 			local chance = 1
@@ -105,32 +102,44 @@ mobs:register_mob("mobs_npc:igor", {
 				drop = "default:coal_lump"
 			end
 
-			minetest.add_item(pos, {name = drop})
+			local obj = minetest.add_item(pos, {name = drop})
+			local dir = clicker:get_look_dir()
 
-			minetest.chat_send_player(name, S("NPC dropped you an item for gold!"))
+			obj:set_velocity({x = -dir.x, y = 1.5, z = -dir.z})
+
+			--minetest.chat_send_player(name, S("NPC dropped you an item for gold!"))
 
 			return
 		end
 
-		-- if owner switch between follow and stand
+		-- by right-clicking owner can switch npc between follow, wander and stand
 		if self.owner and self.owner == name then
 
 			if self.order == "follow" then
 
-				self.attack = nil
+				self.order = "wander"
+
+				minetest.chat_send_player(name, S("NPC will wander."))
+
+			elseif self.order == "wander" then
+
 				self.order = "stand"
 				self.state = "stand"
+				self.attack = nil
+
 				self:set_animation("stand")
 				self:set_velocity(0)
 
 				minetest.chat_send_player(name, S("NPC stands still."))
-			else
+
+			elseif self.order == "stand" then
+
 				self.order = "follow"
 
 				minetest.chat_send_player(name, S("NPC will follow you."))
 			end
 		end
-	end,
+	end
 })
 
 mobs:register_egg("mobs_npc:igor", S("Igor"), "mobs_meat_raw.png", 1)
