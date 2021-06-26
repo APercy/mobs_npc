@@ -22,6 +22,7 @@ end
 dofile(path .. "npc.lua") -- TenPlus1
 dofile(path .. "trader.lua")
 dofile(path .. "igor.lua")
+dofile(path .. "quest_npc.lua")
 
 
 -- Load custom spawning
