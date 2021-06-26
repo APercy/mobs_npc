@@ -8,7 +8,7 @@ mobs:register_mob("mobs_npc:quest_npc", {
 	passive = false,
 	damage = 90000,
 	attack_type = "dogfight",
-	attacks_monsters = true,
+	attacks_monsters = false,
 	attack_npcs = false,
 	owner_loyal = true,
 	pathfinding = true,
@@ -83,6 +83,10 @@ mobs:register_mob("mobs_npc:quest_npc", {
                 self.quests = minetest.deserialize("return "..data.text) or {}
                 minetest.chat_send_player(name, S(self.quests["greetings"] or "Hi!"))
             else
+                if item:get_name() == "dye:white" then
+                    self.object:remove()
+                    return
+                end
 			    if self.order == "follow" then
 
 				    self.order = "wander"
@@ -108,9 +112,12 @@ mobs:register_mob("mobs_npc:quest_npc", {
 			    end
             end
         else
-            local text = self.quests[item:get_name()]
-            if text == nil or text == "" then
-                text = self.quests["greetings"] or "Hi!"
+            local text = "Hi!"
+            if self.quests then
+                text = self.quests[item:get_name()] or ""
+                if text == nil or text == "" then
+                    text = self.quests["greetings"] or "Hi!"
+                end
             end
             minetest.chat_send_player(name, core.colorize('#5555ff', text))
 		end
