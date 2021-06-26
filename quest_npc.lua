@@ -25,10 +25,7 @@ mobs:register_mob("mobs_npc:quest_npc", {
 		{"mobs_npc3.png"}, -- male by swagman181818
 		{"mobs_npc4.png"}, -- female by Sapphire16
 		{"mobs_igor.png"}, -- skin by ruby32199
-		{"mobs_igor2.png"},
-		{"mobs_igor3.png"},
 		{"mobs_igor4.png"},
-		{"mobs_igor5.png"},
 		{"mobs_igor6.png"},
 		{"mobs_igor7.png"},
 		{"mobs_igor8.png"}
