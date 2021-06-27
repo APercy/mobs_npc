@@ -3,6 +3,34 @@ local S = mobs.intllib
 
 -- Quest Npc by TenPlus1 and APercy
 
+local function talk(self, name, item)
+    local text = "Hi!"
+    if self.quests then
+        text = self.quests[item:get_name()] or ""
+        if text == nil or text == "" then
+            text = self.quests["greetings"] or "Hi!"
+        end
+    end
+    --minetest.chat_send_player(name, core.colorize('#5555ff', text))
+    local balloon = ""
+    if string.len(text) > 320 then
+	    balloon = table.concat({
+		    "formspec_version[3]",
+		    "size[16,10]",
+		    "background[-0.7,-0.5;17.5,11.5;mobs_balloon.png]",
+            "textarea[1,1;14,8;;;",text,"]",
+	    }, "")
+    else
+	    balloon = table.concat({
+		    "formspec_version[3]",
+		    "size[8,5]",
+		    "background[-0.7,-0.5;9.5,6.5;mobs_balloon_2.png]",
+            "textarea[1,0.75;6.5,4;;;",text,"]",
+	    }, "")
+    end
+    minetest.show_formspec(name, "mobs_npc:dialog_balloon", balloon)
+end
+
 mobs:register_mob("mobs_npc:quest_npc", {
 	type = "npc",
 	passive = false,
@@ -84,39 +112,36 @@ mobs:register_mob("mobs_npc:quest_npc", {
                     self.object:remove()
                     return
                 end
-			    if self.order == "follow" then
+                if item:get_name() == "dye:black" then
+			        if self.order == "follow" then
 
-				    self.order = "wander"
+				        self.order = "wander"
 
-				    minetest.chat_send_player(name, S("NPC will wander."))
+				        minetest.chat_send_player(name, S("NPC will wander."))
 
-			    elseif self.order == "wander" then
+			        elseif self.order == "wander" then
 
-				    self.order = "stand"
-				    self.state = "stand"
-				    self.attack = nil
+				        self.order = "stand"
+				        self.state = "stand"
+				        self.attack = nil
 
-				    self:set_animation("stand")
-				    self:set_velocity(0)
+				        self:set_animation("stand")
+				        self:set_velocity(0)
 
-				    minetest.chat_send_player(name, S("NPC stands still."))
+				        minetest.chat_send_player(name, S("NPC stands still."))
 
-			    elseif self.order == "stand" then
+			        elseif self.order == "stand" then
 
-				    self.order = "follow"
+				        self.order = "follow"
 
-				    minetest.chat_send_player(name, S("NPC will follow you."))
-			    end
-            end
-        else
-            local text = "Hi!"
-            if self.quests then
-                text = self.quests[item:get_name()] or ""
-                if text == nil or text == "" then
-                    text = self.quests["greetings"] or "Hi!"
+				        minetest.chat_send_player(name, S("NPC will follow you."))
+			        end
+                else
+                    talk(self, name, item)
                 end
             end
-            minetest.chat_send_player(name, core.colorize('#5555ff', text))
+        else
+            talk(self, name, item)
 		end
 	end
 })
