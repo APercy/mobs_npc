@@ -75,7 +75,6 @@ mobs:register_mob("mobs_npc:quest_npc", {
 	owner = "",
 	order = "stand",
 	fear_height = 3,
-    quest_text = "",
 	animation = {
 		speed_normal = 30,
 		speed_run = 30,
@@ -105,6 +104,12 @@ mobs:register_mob("mobs_npc:quest_npc", {
             if item:get_name() == "default:book_written" then
                 local data = item:get_meta():to_table().fields
                 --minetest.chat_send_player(name, dump(data.text))
+                self.npc_role = data.title or "Helper"
+                self.nametag = self.npc_role
+		        self.object:set_properties({
+			        nametag = self.nametag,
+			        nametag_color = "#FFFFFF"
+		        })
                 self.quests = minetest.deserialize("return "..data.text) or {}
                 minetest.chat_send_player(name, S(self.quests["greetings"] or "Hi!"))
             else
@@ -143,6 +148,19 @@ mobs:register_mob("mobs_npc:quest_npc", {
         else
             talk(self, name, item)
 		end
+	end,
+
+	on_spawn = function(self)
+
+		self.nametag = S("Helper")
+
+        if self.npc_role then self.nametag = self.npc_role end
+		self.object:set_properties({
+			nametag = self.nametag,
+			nametag_color = "#FFFFFF"
+		})
+
+		return true -- return true so on_spawn is run once only
 	end
 })
 
