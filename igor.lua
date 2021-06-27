@@ -21,7 +21,7 @@ mobs:register_mob("mobs_npc:igor", {
 	pathfinding = true,
 	reach = 2,
 	attacks_monsters = true,
-    attack_players = true,
+    group_attack = true,
 	hp_min = 20,
 	hp_max = 30,
 	armor = 100,
@@ -140,8 +140,30 @@ mobs:register_mob("mobs_npc:igor", {
 				minetest.chat_send_player(name, S("NPC will follow you."))
 			end
 		end
+	end,
+
+	-- check surrounding nodes and spawn a specific monster
+	on_spawn = function(self)
+
+		local pos = self.object:get_pos() ; pos.y = pos.y - 1
+
+		return true -- run only once, false/nil runs every activation
 	end
 })
+
+if not mobs.custom_spawn_igor then
+mobs:spawn({
+	name = "mobs_npc:igor",
+	nodes = {"mobs:meatblock"},
+	min_light = 0,
+	max_light = 15,
+	interval = 2,
+	chance = 2,
+	active_object_count = 2,
+	min_height = 0,
+	day_toggle = false,
+})
+end
 
 mobs:register_egg("mobs_npc:igor", S("Igor"), "mobs_meat_raw.png", 1)
 
