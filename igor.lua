@@ -21,6 +21,7 @@ mobs:register_mob("mobs_npc:igor", {
 	pathfinding = true,
 	reach = 2,
 	attacks_monsters = true,
+    attack_players = true,
 	hp_min = 20,
 	hp_max = 30,
 	armor = 100,
@@ -54,7 +55,7 @@ mobs:register_mob("mobs_npc:igor", {
 	follow = {"mobs:meat_raw", "default:diamond"},
 	view_range = 15,
 	owner = "",
-	order = "follow",
+	order = "wander",
 	animation = {
 		speed_normal = 30,
 		speed_run = 30,
