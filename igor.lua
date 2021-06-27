@@ -13,7 +13,7 @@ mobs.igor_drops = {
 }
 
 mobs:register_mob("mobs_npc:igor", {
-	type = "npc",
+	type = "monster",
 	passive = false,
 	damage = 5,
 	attack_type = "dogfight",
@@ -22,8 +22,8 @@ mobs:register_mob("mobs_npc:igor", {
 	reach = 2,
 	attacks_monsters = true,
     group_attack = true,
-	hp_min = 20,
-	hp_max = 30,
+	hp_min = 50,
+	hp_max = 60,
 	armor = 100,
 	collisionbox = {-0.35,-1.0,-0.35, 0.35,0.8,0.35},
 	visual = "mesh",
