@@ -34,5 +34,36 @@ end
 -- Lucky Blocks
 dofile(path .. "/lucky_block.lua")
 
+-- checkpoint logo
+minetest.register_node("mobs_npc:bad_igor_spawn", {
+	description = "Monster Spawn",
+	tiles = {"spawn_logo.png"},
+	wield_image = "spawn_logo.png",
+	inventory_image = "spawn_logo.png",
+	sounds = default.node_sound_stone_defaults(),
+	groups = {dig_immediate = 2, unbreakable = 1},
+	paramtype = "light",
+	paramtype2 = "wallmounted",
+	legacy_wallmounted = true,
+	light_source = 4,
+	drawtype = "nodebox",
+	sunlight_propagates = true,
+	walkable = true,
+	node_box = {
+		type = "wallmounted",
+		wall_top    = {-0.5, 0.4375, -0.5, 0.5, 0.5, 0.5},
+		wall_bottom = {-0.5, -0.5, -0.5, 0.5, -0.4375, 0.5},
+		wall_side   = {-0.5, -0.5, -0.5, -0.4375, 0.5, 0.5},
+	},
+	selection_box = {type = "wallmounted"},
+
+	after_place_node = function(pos, placer)
+
+        local meta = minetest.get_meta(pos)
+		--meta:set_string("owner", placer:get_player_name() or "")
+		meta:set_string("infotext", "Monster Spawn")
+	end
+})
+
 
 print (S("[MOD] Mobs Redo NPCs loaded"))
