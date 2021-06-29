@@ -3,12 +3,50 @@ local S = mobs.intllib
 
 -- Quest Npc by TenPlus1 and APercy
 
-local function talk(self, name, item)
+--[[
+EXAMPLE:
+
+{["greetings"]='Welcome! Can I see your glass?',["default:glass"]={["text"]='Great! Good forged glass',["open"]={["x"]='0',["y"]=0,["z"]=0,["time"]=10},},}
+
+
+the "open" instruction:
+["mod:item"]={["text"]="text",["open"]={["x"]='0',["y"]=0,["z"]=0,["time"]=10}}
+
+
+
+
+]]--
+
+local function execute_script(self, name, item)
     local text = "Hi!"
     if self.quests then
-        text = self.quests[item:get_name()] or ""
-        if text == nil or text == "" then
-            text = self.quests["greetings"] or "Hi!"
+        local content = self.quests[item:get_name()] or ""
+        if content == nil or content == "" then
+            --only the text
+            text = self.quests["greetings"] or "Hi!" --default Hi
+        else
+            text = content["text"] or "..." --if no text, try to simulate a silence action
+            local open = content["open"] or nil
+            if open then
+                if open.x ~= nil and open.z ~= nil then
+                    local curr_pos = self.object:get_pos()
+                    local relative_pos = {x=open.x, y=open.y or 0, z=open.z}
+                    local absolute_pos = vector.add(curr_pos, relative_pos)
+                    absolute_pos.y = absolute_pos.y - 0.5
+                    local time = open.time or 10
+                    local meta = minetest.get_meta(absolute_pos);
+
+                    local node_name = minetest.get_node(absolute_pos).name
+                    minetest.chat_send_player(name, node_name)--dump(absolute_pos))
+
+			        minetest.after(2, function() 
+                        doors.door_toggle(absolute_pos, nil, nil)
+			            minetest.after(time, function() 
+                            doors.door_toggle(absolute_pos, nil, nil)
+			            end ) 
+			        end ) 
+                end
+            end
         end
     end
     --minetest.chat_send_player(name, core.colorize('#5555ff', text))
@@ -142,11 +180,11 @@ mobs:register_mob("mobs_npc:quest_npc", {
 				        minetest.chat_send_player(name, S("NPC will follow you."))
 			        end
                 else
-                    talk(self, name, item)
+                    execute_script(self, name, item)
                 end
             end
         else
-            talk(self, name, item)
+            execute_script(self, name, item)
 		end
 	end,
 
