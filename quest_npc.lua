@@ -37,14 +37,15 @@ local function execute_script(self, name, item)
                     local meta = minetest.get_meta(absolute_pos);
 
                     local node_name = minetest.get_node(absolute_pos).name
-                    minetest.chat_send_player(name, node_name)--dump(absolute_pos))
-
-			        minetest.after(2, function() 
-                        doors.door_toggle(absolute_pos, nil, nil)
-			            minetest.after(time, function() 
+                    if string.find(node_name, "doors:") then
+                        --minetest.chat_send_player(name, node_name)--dump(absolute_pos))
+			            minetest.after(2, function() 
                             doors.door_toggle(absolute_pos, nil, nil)
+			                minetest.after(time, function() 
+                                doors.door_toggle(absolute_pos, nil, nil)
+			                end ) 
 			            end ) 
-			        end ) 
+                    end
                 end
             end
         end
