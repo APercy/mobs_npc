@@ -145,7 +145,7 @@ mobs:register_mob("mobs_npc:igor", {
 	-- check surrounding nodes and spawn a specific monster
 	on_spawn = function(self)
 
-		local pos = self.object:get_pos() ; pos.y = pos.y - 1
+		local pos = self.object:get_pos() ; pos.y = pos.y + 0.5
 
 		return true -- run only once, false/nil runs every activation
 	end
