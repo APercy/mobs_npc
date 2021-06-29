@@ -20,7 +20,7 @@ mobs:register_mob("mobs_npc:igor", {
 	owner_loyal = true,
 	pathfinding = true,
 	reach = 2,
-	attacks_monsters = true,
+	--attacks_monsters = true,
     group_attack = true,
 	hp_min = 30,
 	hp_max = 40,
@@ -160,7 +160,7 @@ mobs:spawn({
 	interval = 1,
 	chance = 1,
 	active_object_count = 3,
-	min_height = 0,
+	--min_height = 0,
 	day_toggle = false,
 })
 end
