@@ -36,7 +36,12 @@ mobs:register_mob("mobs_npc:igor", {
 		{"mobs_igor5.png"},
 		{"mobs_igor6.png"},
 		{"mobs_igor7.png"},
-		{"mobs_igor8.png"}
+		{"mobs_igor8.png"},
+        {"mobs_npc_ghost.png"},  -- skin by daniel pereira
+        {"mobs_npc_ghost2.png"}, -- skin by daniel pereira
+        {"mobs_npc_banshee.png"},   -- nelly
+        {"mobs_npc_banshee2.png"},  -- TenPlus1
+        {"mobs_npc_killer.png"}     -- Phill
 	},
 	makes_footstep_sound = true,
 	sounds = {},
