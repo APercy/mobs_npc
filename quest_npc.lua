@@ -28,17 +28,15 @@ local function execute_script(self, name, item)
             text = content["text"] or "..." --if no text, try to simulate a silence action
             local open = content["open"] or nil
             if open then
-                if open.x ~= nil and open.z ~= nil then
-                    local curr_pos = self.object:get_pos()
-                    local relative_pos = {x=open.x, y=open.y or 0, z=open.z}
-                    local absolute_pos = vector.add(curr_pos, relative_pos)
-                    absolute_pos.y = absolute_pos.y - 0.5
+                if open.x ~= nil and open.y ~= nil and open.z ~= nil then
+                    local absolute_pos = {x=open.x, y=open.y, z=open.z}
+                    --absolute_pos.y = absolute_pos.y + 0.5
                     local time = open.time or 10
                     local meta = minetest.get_meta(absolute_pos);
 
                     local node_name = minetest.get_node(absolute_pos).name
+                    minetest.chat_send_player(name, node_name)--dump(absolute_pos))
                     if string.find(node_name, "doors:") then
-                        --minetest.chat_send_player(name, node_name)--dump(absolute_pos))
 			            minetest.after(2, function() 
                             doors.door_toggle(absolute_pos, nil, nil)
 			                minetest.after(time, function() 
