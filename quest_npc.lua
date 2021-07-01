@@ -21,6 +21,16 @@ the "give" instruction
 
 ]]--
 
+local _contexts = {}
+local function get_context(name)
+    local context = _contexts[name] or {}
+    _contexts[name] = context
+    return context
+end
+
+minetest.register_on_leaveplayer(function(player)
+    _contexts[player:get_player_name()] = nil
+end)
 
 mobs_npc_textures = {
 	{"mobs_npc.png"},
@@ -86,11 +96,29 @@ local function take_item(item_name, player)
     end
 end
 
+--TODO
+local function getItemSpecs(itemName)
+    local items = ItemStack(itemName)
+    local meta = items:get_meta()
+    local description = items:get_short_description() --get_description()
+    local definitions = items:get_definition()
+    local retIcon = definitions.inventory_image
+    if retIcon == nil or retIcon == "" then
+        if definitions.tiles ~= nil then
+            retIcon = definitions.tiles[1]
+        end
+    end
+    local retText = "You earned the " .. description
+    return retText, retIcon
+end
+
 local function give_item(item_name, player)
     local item = player:get_inventory():add_item("main", item_name .. " " .. 1)
     if item then
         minetest.add_item(player:getpos(), item)
     end
+    local context = get_context(player:get_player_name())
+    context.text, context.icon = getItemSpecs(item_name)
 end
 
 local function execute_script(self, player, item)
@@ -144,6 +172,27 @@ local function execute_script(self, player, item)
     end
     minetest.show_formspec(name, "mobs_npc:dialog_balloon", balloon)
 end
+
+minetest.register_on_player_receive_fields(function(player, formname, fields)
+	if formname == "mobs_npc:dialog_balloon" then
+        local context = get_context(player:get_player_name())
+		if fields.quit and context.text ~= nil then
+            local text = context.text
+            local icon = context.icon
+	        local balloon = table.concat({
+		        "formspec_version[3]",
+		        "size[8,5]",
+		        "background[-0.7,-0.5;9.5,6.5;mobs_balloon_2.png]",
+                "textarea[1,0.75;6.5,2;;;",text,"]",
+				"image[3,3;2,2;",icon,"]",
+	        }, "")
+            context.text = nil
+            context.icon = nil
+
+			minetest.show_formspec(player:get_player_name(), "mobs_npc:received", balloon)
+		end
+    end
+end)
 
 mobs:register_mob("mobs_npc:quest_npc", {
 	type = "npc",
