@@ -194,7 +194,9 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
             context.text = nil
             context.icon = nil
 
-			minetest.show_formspec(player:get_player_name(), "mobs_npc:received", balloon)
+            minetest.after(1, function() 
+                minetest.show_formspec(player:get_player_name(), "mobs_npc:received", balloon)
+            end )
 		end
     end
 end)
