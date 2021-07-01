@@ -100,7 +100,12 @@ end
 local function getItemSpecs(itemName)
     local items = ItemStack(itemName)
     local meta = items:get_meta()
-    local description = items:get_short_description() --get_description()
+    local description = ""
+    if items.get_short_description then
+        description = items:get_short_description()
+    else
+        description = items:get_description()
+    end
     local definitions = items:get_definition()
     local retIcon = definitions.inventory_image
     if retIcon == nil or retIcon == "" then
