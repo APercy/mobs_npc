@@ -63,7 +63,8 @@ mobs_npc_textures = {
     {"mobs_npc_banshee2.png"},  -- TenPlus1
     {"mobs_npc_farmer.png"},    -- sdzen
     {"mobs_npc_farmer2.png"},   -- sdzen
-    {"mobs_npc_killer.png"}     -- Phill
+    {"mobs_npc_killer.png"},    -- Phill
+    {"mobs_npc_dead_warrior.png"}    --APercy
 }
 
 
