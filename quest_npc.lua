@@ -133,8 +133,14 @@ local function execute_script(self, player, item)
         local item_name = item:get_name()
         local content = self.quests[item_name] or ""
         if content == nil or content == "" then
-            --only the text
-            text = self.quests["greetings"] or "Hi!" --default Hi
+            if (type(self.quests["greetings"]) == "table") then
+                --get random texts
+                local text_table = self.quests["greetings"]
+                text = text_table[math.random(#text_table)]
+            else
+                --get the unique string
+                text = self.quests["greetings"] or "Hi!" --default Hi
+            end
         else
             text = content["text"] or "..." --if no text, try to simulate a silence action
             local open = content["open"] or nil
@@ -271,7 +277,14 @@ mobs:register_mob("mobs_npc:quest_npc", {
 			        nametag_color = "#FFFFFF"
 		        })
                 self.quests = minetest.deserialize("return "..data.text) or {}
-                minetest.chat_send_player(name, S(self.quests["greetings"] or "Hi!"))
+                if (type(self.quests["greetings"]) == "table") then
+                    --get random texts
+                    local text_table = self.quests["greetings"]
+                    minetest.chat_send_player(name, S(text_table[math.random(#text_table)] or "Hi!"))
+                else
+                    --get the unique string
+                    minetest.chat_send_player(name, S(self.quests["greetings"] or "Hi!"))
+                end
             else
                 if item:get_name() == "dye:red" then
                     local texture = mobs_npc_textures[math.random(#mobs_npc_textures)]
