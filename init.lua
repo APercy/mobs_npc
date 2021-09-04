@@ -37,7 +37,7 @@ dofile(path .. "/lucky_block.lua")
 -- checkpoint logo
 minetest.register_node("mobs_npc:bad_igor_spawn", {
 	description = "Monster Spawn",
-	tiles = {"spawn_logo.png"},
+	tiles = {"default_stone.png"},
 	wield_image = "spawn_logo.png",
 	inventory_image = "spawn_logo.png",
 	sounds = default.node_sound_stone_defaults(),
