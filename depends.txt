@@ -1,5 +1,0 @@
-default
-doors
-mobs
-lucky_block?
-intllib?
