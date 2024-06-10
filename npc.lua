@@ -47,7 +47,7 @@ mobs:register_mob("mobs_npc:npc", {
 		{name = "default:apple", chance = 2, min = 1, max = 2},
 		{name = "default:axe_stone", chance = 5, min = 1, max = 1}
 	},
-	water_damage = 0,
+	water_damage = 1,
 	lava_damage = 2,
 	light_damage = 0,
 	follow = {"farming:bread", "mobs:meat", "default:diamond"},
