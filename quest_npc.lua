@@ -268,6 +268,9 @@ mobs:register_mob("mobs_npc:quest_npc", {
 		    -- feed to heal npc
 		    if mobs:feed_tame(self, clicker, 8, true, true) then return end
 
+		    -- capture npc with net or lasso
+		    if mobs:capture_mob(self, clicker, nil, 5, 80, false, nil) then return end
+
             if item:get_name() == "default:book_written" then
                 local data = item:get_meta():to_table().fields
                 --minetest.chat_send_player(name, dump(data.text))
